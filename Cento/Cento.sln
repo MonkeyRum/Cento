@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cento", "Cento.csproj", "{56C5D3A4-C03F-4DF2-A68E-29364A0739DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cento.Project", "..\Cento.Project\Cento.Project.csproj", "{3464F207-355D-480A-8AA2-1C9A87CC2730}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56C5D3A4-C03F-4DF2-A68E-29364A0739DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56C5D3A4-C03F-4DF2-A68E-29364A0739DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56C5D3A4-C03F-4DF2-A68E-29364A0739DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56C5D3A4-C03F-4DF2-A68E-29364A0739DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3464F207-355D-480A-8AA2-1C9A87CC2730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3464F207-355D-480A-8AA2-1C9A87CC2730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3464F207-355D-480A-8AA2-1C9A87CC2730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3464F207-355D-480A-8AA2-1C9A87CC2730}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
