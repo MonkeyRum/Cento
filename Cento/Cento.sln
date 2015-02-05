@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cento.Control", "..\Cento.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cento.Core", "..\Cento.Core\Cento.Core.csproj", "{C80C0929-7ABF-4F59-9516-5B14F7F6E840}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cento.Core.Test", "..\Cento.Core.Test\Cento.Core.Test.csproj", "{6D896F92-6448-4384-9A3B-63364190B317}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C80C0929-7ABF-4F59-9516-5B14F7F6E840}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C80C0929-7ABF-4F59-9516-5B14F7F6E840}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C80C0929-7ABF-4F59-9516-5B14F7F6E840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D896F92-6448-4384-9A3B-63364190B317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D896F92-6448-4384-9A3B-63364190B317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D896F92-6448-4384-9A3B-63364190B317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D896F92-6448-4384-9A3B-63364190B317}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
