@@ -14,7 +14,7 @@ namespace Cento.Control
     /// Control for displaying an image with a grid overlay.
     /// Can return grid index on mouse click.
     /// </summary>
-    public partial class GridImageBox : UserControl
+    public partial class CentoImageBox : UserControl
     {
         #region Members
 
@@ -28,7 +28,7 @@ namespace Cento.Control
 
         #region Constructors
 
-        public GridImageBox()
+        public CentoImageBox()
         {
             InitializeComponent();
 
@@ -39,7 +39,7 @@ namespace Cento.Control
                 ControlStyles.AllPaintingInWmPaint, true);
 
             // TEMP
-            this.Image = Image.FromFile(@"F:\backup\Pictures\Imagedataset\IMG_5097.JPG");
+            //this.Image = Image.FromFile(@"F:\backup\Pictures\Imagedataset\IMG_5097.JPG");
 
             // Set false in member declare and true here to force scale update
             this.ScaleToFit = true;
@@ -109,19 +109,22 @@ namespace Cento.Control
         /// </summary>
         private void ScaleToFitImpl()
         {
-            // image dimensions
-            int iw = this.Image.Width;
-            int ih = this.Image.Height;
+            if (this.Image != null)
+            {
+                // image dimensions
+                int iw = this.Image.Width;
+                int ih = this.Image.Height;
 
-            // control dimensions
-            int cw = this.Width;
-            int ch = this.Height;
+                // control dimensions
+                int cw = this.ClientRectangle.Width;
+                int ch = this.ClientRectangle.Height;
 
-            // scale factors
-            float sw = (float)cw / iw;
-            float sh = (float)ch / ih;
+                // scale factors
+                float sw = (float)cw / iw;
+                float sh = (float)ch / ih;
 
-            this.ImageScale = sw <= sh ? sw : sh;
+                this.ImageScale = sw < sh ? sw : sh;
+            }
         }
 
         #endregion
@@ -143,12 +146,15 @@ namespace Cento.Control
             base.OnPaint(e);
 
             var g = e.Graphics;
-
+            
             if (this.Image != null)
             {
-                g.ResetTransform();
-                g.ScaleTransform(this.ImageScale * 2, this.ImageScale * 2);
-                g.DrawImage(this.Image, ORIGIN);
+                int newWidth = (int)(this.Image.Width * this.ImageScale);
+                int newHeight = (int)(this.Image.Height * this.ImageScale);
+
+                g.Clip = new Region(new Rectangle(0, 0, newWidth, newHeight));
+
+                g.DrawImage(this.Image, 0, 0, newWidth, newHeight);
             }
         }
 

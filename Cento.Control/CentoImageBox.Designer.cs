@@ -1,6 +1,6 @@
 ﻿namespace Cento.Control
 {
-    partial class GridImageBox
+    partial class CentoImageBox
     {
         /// <summary> 
         /// Required designer variable.

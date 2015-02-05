@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cento.Core.View;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Cento
+namespace Cento.View
 {
-    public partial class MainView : Form
+    public partial class MainView : Form, IMainView
     {
         public MainView()
         {
