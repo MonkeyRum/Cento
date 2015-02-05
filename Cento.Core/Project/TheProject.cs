@@ -14,6 +14,8 @@ namespace Cento.Core.Project
         private static object syncRoot = new Object();
         private CentoProject _project = new CentoProject();
 
+        public event EventHandler ProjectFilenameChanged;
+
         private ObservableCollection<CentoProjectDataImage> _dataImages 
             = new ObservableCollection<CentoProjectDataImage>();
 
@@ -52,10 +54,14 @@ namespace Cento.Core.Project
                     System.IO.StreamReader file = new System.IO.StreamReader(filename);
                     this._project = (CentoProject)reader.Deserialize(file);
 
+                    this.ProjectFilename = filename;
+
                     foreach(var dataImage in this._project.DataImage)
                     {
                         this.DataImages.Add(dataImage);
                     }
+
+                    bIsOpenSuccess = true;
                 }
             }
 
@@ -74,6 +80,21 @@ namespace Cento.Core.Project
                 {
                     this._dataImages = value;
                 }
+            }
+        }
+
+        public string ProjectFilename
+        {
+            get;
+            private set;
+        }
+
+        private void OnProjectFilenameChanged()
+        {
+            var cpy = this.ProjectFilenameChanged;
+            if(cpy != null)
+            {
+                cpy(this, EventArgs.Empty);
             }
         }
     }

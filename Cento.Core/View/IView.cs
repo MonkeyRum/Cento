@@ -8,5 +8,6 @@ namespace Cento.Core.View
 {
     public interface IView
     {
+        void Show();
     }
 }

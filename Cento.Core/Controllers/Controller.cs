@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Cento.Core.Controllers
 {
-    public class Controller
+    public abstract class Controller : IController
     {
         #region Properties
 
-        
+        public abstract void ShowView();
 
         #endregion
     }

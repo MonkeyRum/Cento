@@ -1,4 +1,5 @@
-﻿using Cento.View;
+﻿using Cento.Core.Controllers;
+using Cento.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,14 @@ namespace Cento
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainView());
+
+            IMainController controller = new MainController()
+            {
+                View = new MainView()
+            };
+
+            // Quick cast because I know we're using WinForms
+            Application.Run((Form)controller.View);
         }
     }
 }
