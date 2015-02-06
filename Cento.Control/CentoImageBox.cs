@@ -61,6 +61,12 @@ namespace Cento.Control
                 if (!ReferenceEquals(value, this._image))
                 {
                     this._image = value;
+
+                    if (this.ScaleToFit)
+                    {
+                        this.ScaleToFitImpl();
+                    }
+
                     this.Invalidate();
                 }
             }
@@ -75,7 +81,7 @@ namespace Cento.Control
             }
             set
             {
-                if (value > 0.0)
+                if (value > 0.0 && !this.ScaleToFit)
                 {
                     this._imageScale = value;
                 }
@@ -123,7 +129,7 @@ namespace Cento.Control
                 float sw = (float)cw / iw;
                 float sh = (float)ch / ih;
 
-                this.ImageScale = sw < sh ? sw : sh;
+                this._imageScale = sw < sh ? sw : sh;
             }
         }
 

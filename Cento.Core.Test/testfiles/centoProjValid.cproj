@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CentoProject version="3.14159">
   <DataImage id="str1234" patch_width="128" patch_height="128">
-    <Filename>str1234</Filename>
+    <Filename>IMG_5097.JPG</Filename>
     <DataFile name="str1234">str1234</DataFile>
     <ClassificationFile>str1234</ClassificationFile>
   </DataImage>

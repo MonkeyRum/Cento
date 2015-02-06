@@ -2,6 +2,7 @@
 using Cento.Core.View;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Cento.Core.Controllers
         #region Members
 
         private IMainView _view = null;
+        List<Image> _images = new List<Image>();
 
         #endregion
 
@@ -62,9 +64,14 @@ namespace Cento.Core.Controllers
                 bSuccess = TheProject.Instance.OpenProject(filename);
                 InitNewProjectView();
             }
+            catch(IOException e)
+            {
+                this.View.DisplayErrorMessage("IO Error", e.Message);
+            }
             catch (Exception e)
             {
                 bSuccess = false;
+                this.View.DisplayErrorMessage("Error", e.Message);
             }
 
             return bSuccess;
@@ -72,15 +79,32 @@ namespace Cento.Core.Controllers
 
         private void InitNewProjectView()
         {
-            SetViewFilename(TheProject.Instance.ProjectFilename);
+            SetViewProjectFilename(TheProject.Instance.ProjectFilename);
+            LoadImages();
+            SetCurrentImage();
         }
 
-        private void SetViewFilename(string filename)
+        private void LoadImages()
+        {
+            foreach(var dataImage in TheProject.Instance.DataImages)
+            {
+                string filename = Path.Combine(TheProject.Instance.ProjectFolderPath, dataImage.Filename);
+                Image img = Image.FromFile(filename);
+                this._images.Add(img);
+            }
+        }
+
+        private void SetViewProjectFilename(string projectFilename)
         {
             if (this.View != null)
             {
-                this.View.Filename = filename;
+                this.View.ProjectFilename = projectFilename;
             }
+        }
+
+        private void SetCurrentImage(int index = 0)
+        {
+            this.View.CurrentImage = this._images[index];
         }
 
         #endregion
@@ -101,7 +125,7 @@ namespace Cento.Core.Controllers
 
         void Instance_ProjectFilenameChanged(object sender, EventArgs e)
         {
-            this.View.Filename = TheProject.Instance.ProjectFilename;
+            this.View.ProjectFilename = TheProject.Instance.ProjectFilename;
         }
 
         void View_ProjectOpened(object sender, ProjectOpenedEventArgs e)

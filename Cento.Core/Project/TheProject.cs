@@ -89,6 +89,14 @@ namespace Cento.Core.Project
             private set;
         }
 
+        public string ProjectFolderPath
+        {
+            get
+            {
+                return Path.GetDirectoryName(this.ProjectFilename);
+            }
+        }
+
         private void OnProjectFilenameChanged()
         {
             var cpy = this.ProjectFilenameChanged;

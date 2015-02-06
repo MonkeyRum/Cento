@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,8 @@ namespace Cento.Core.View
 
     public interface IMainView : IView
     {
-        string Filename { get; set; }
+        string ProjectFilename { get; set; }
+        Image CurrentImage { get; set; }
 
         event EventHandler<ProjectOpenedEventArgs> ProjectOpened;
     }

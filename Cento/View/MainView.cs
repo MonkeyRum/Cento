@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,11 @@ namespace Cento.View
 
         public event EventHandler<ProjectOpenedEventArgs> ProjectOpened;
 
+        public void DisplayErrorMessage(string caption, string description)
+        {
+            MessageBox.Show(description, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         protected virtual void OnProjectOpened(ProjectOpenedEventArgs e)
         {
             EventHandler<ProjectOpenedEventArgs> handler = ProjectOpened;
@@ -45,7 +51,12 @@ namespace Cento.View
             }
         }
 
-        public string Filename
+        private void tlBtnOpenProject_Click(object sender, EventArgs e)
+        {
+            openProjectToolStripMenuItem_Click(sender, e);
+        }
+
+        public string ProjectFilename
         {
             get
             {
@@ -54,7 +65,41 @@ namespace Cento.View
             set
             {
                 this._filename = value;
-                this.Text = "Cento - " + value;
+                this.Text = "Cento - " + Path.GetFileName(value);
+            }
+        }
+
+
+
+
+        public Image CurrentImage
+        {
+            get
+            {
+                return centoGridImageBox1.Image;
+            }
+            set
+            {
+                centoGridImageBox1.Image = value;
+            }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox1 abt = new AboutBox1();
+            abt.ShowDialog();
+        }
+
+
+        public List<string> Filenames
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
             }
         }
     }

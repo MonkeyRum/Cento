@@ -9,5 +9,6 @@ namespace Cento.Core.View
     public interface IView
     {
         void Show();
+        void DisplayErrorMessage(string caption, string description);
     }
 }
