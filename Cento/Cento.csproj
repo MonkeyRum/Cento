@@ -50,6 +50,7 @@
     <Compile Include="View\AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Actions\MainViewActions.cs" />
     <Compile Include="View\MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,6 +59,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\ViewBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ViewBase.Designer.cs">
+      <DependentUpon>ViewBase.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="View\AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </EmbeddedResource>

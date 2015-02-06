@@ -15,15 +15,27 @@ namespace Cento.Core.Controllers
         #region Members
 
         private IMainView _view = null;
-        List<Image> _images = new List<Image>();
+        private int _currentDataImageIndex = -1;
 
         #endregion
 
         #region Constructors
 
-        public MainController()
+        public MainController(IMainView view)
         {
-            CentoCore.Instance.ProjectFilenameChanged += Instance_ProjectFilenameChanged;
+            if (view == null)
+                throw new ArgumentNullException("view");
+
+            this.View = view;
+
+            CentoCore.Instance.ProjectOpened += Instance_ProjectOpened;
+
+            this.View.Actions.OpenProject += Actions_OpenProject;
+
+            this.View.Actions.FirstDataImage += Actions_FirstDataImage;
+            this.View.Actions.PreviousDataImage += Actions_PreviousDataImage;
+            this.View.Actions.NextDataImage += Actions_NextDataImage;
+            this.View.Actions.LastDataImage += Actions_LastDataImage;
         }
 
         #endregion
@@ -38,73 +50,78 @@ namespace Cento.Core.Controllers
             }
             set
             {
-                if(this.View != null)
-                {
-                    this.View.ProjectOpened -= View_ProjectOpened;
-                }
-
-                if (value != null)
-                {
-                    this._view = value;
-                    this.View.ProjectOpened += View_ProjectOpened;
-                }
+                this._view = value;
             }
         }
 
         #endregion
 
         #region Methods
-
-        public bool OpenProject(string filename)
+        
+        private void InitProjectView()
         {
-            bool bSuccess = false;
+            this.View.ProjectFilename = CentoCore.Instance.ProjectFilename;
 
-            try
+            List<CentoProjectDataImage> dataImages = new List<CentoProjectDataImage>(CentoCore.Instance.DataImageCount);
+            foreach(var dataImage in CentoCore.Instance.DataImages())
             {
-                bSuccess = CentoCore.Instance.OpenProject(filename);
-                InitNewProjectView();
+                dataImages.Add(dataImage);
             }
-            catch(IOException e)
-            {
-                this.View.DisplayErrorMessage("IO Error", e.Message);
-            }
-            catch (Exception e)
-            {
-                bSuccess = false;
-                this.View.DisplayErrorMessage("Error", e.Message);
-            }
+            this.View.DataImageList = dataImages;
 
-            return bSuccess;
+            // will except if the project happens to be empty
+            this.View.CurrentDataImage = CentoCore.Instance.GetDataImageFromIndex(0);
+
+            SetMoveButtonsEnabledStatus();
         }
 
-        private void InitNewProjectView()
+        private void SetCurrentDataImage(int index)
         {
-            SetViewProjectFilename(CentoCore.Instance.ProjectFilename);
-            LoadImages();
-            SetCurrentImage();
+            // will except when out of bounds
+            var dataImage = CentoCore.Instance.GetDataImageFromIndex(index);
+            this._currentDataImageIndex = index;
+
+            this.View.CurrentDataImage = dataImage;
+
+            SetMoveButtonsEnabledStatus();
         }
 
-        private void LoadImages()
+        private void SetMoveButtonsEnabledStatus()
         {
-            foreach(var dataImage in CentoCore.Instance.DataImages)
+            int count = CentoCore.Instance.DataImageCount;
+
+            if(count == 1)
             {
-                string filename = Path.Combine(CentoCore.Instance.ProjectFolderPath, dataImage.Filename);
-                Image img = Image.FromFile(filename);
-                this._images.Add(img);
+                this.View.FirstDataImageEnabled = false;
+                this.View.PreviousDataImageEnabled = false;
+                this.View.NextDataImageEnabled = false;
+                this.View.LastDataImageEnabled = false;
             }
-        }
-
-        private void SetViewProjectFilename(string projectFilename)
-        {
-            if (this.View != null)
+            else
             {
-                this.View.ProjectFilename = projectFilename;
+                // right hand edge
+                if (this._currentDataImageIndex > 0 && this._currentDataImageIndex == count - 1)
+                {
+                    this.View.FirstDataImageEnabled = true;
+                    this.View.PreviousDataImageEnabled = true;
+                    this.View.NextDataImageEnabled = false;
+                    this.View.LastDataImageEnabled = false;
+                }
+                else if (this._currentDataImageIndex == 0) // left hand edge
+                {
+                    this.View.FirstDataImageEnabled = false;
+                    this.View.PreviousDataImageEnabled = false;
+                    this.View.NextDataImageEnabled = true;
+                    this.View.LastDataImageEnabled = true;
+                }
+                else // in the middle
+                {
+                    this.View.FirstDataImageEnabled = true;
+                    this.View.PreviousDataImageEnabled = true;
+                    this.View.NextDataImageEnabled = true;
+                    this.View.LastDataImageEnabled = true;
+                }
             }
-        }
-
-        private void SetCurrentImage(int index = 0)
-        {
-            this.View.CurrentImage = this._images[index];
         }
 
         #endregion
@@ -123,14 +140,39 @@ namespace Cento.Core.Controllers
 
         #region Event Handlers
 
-        void Instance_ProjectFilenameChanged(object sender, EventArgs e)
+        void Instance_ProjectOpened(object sender, EventArgs e)
         {
-            this.View.ProjectFilename = CentoCore.Instance.ProjectFilename;
+            _currentDataImageIndex = 0;
+
+            this.InitProjectView();
         }
 
-        void View_ProjectOpened(object sender, ProjectOpenedEventArgs e)
+        void Actions_OpenProject(object sender, OpenProjectEventArgs e)
         {
-            this.OpenProject(e.ProjectFilename);
+            if(!CentoCore.Instance.OpenProject(e.ProjectFilename))
+            {
+                this.View.DisplayErrorMessage("Error", "Failed to open project file.");
+            }
+        }
+
+        void Actions_NextDataImage(object sender, EventArgs e)
+        {
+            SetCurrentDataImage(this._currentDataImageIndex + 1);
+        }
+
+        void Actions_LastDataImage(object sender, EventArgs e)
+        {
+            SetCurrentDataImage(CentoCore.Instance.DataImageCount - 1);
+        }
+
+        void Actions_PreviousDataImage(object sender, EventArgs e)
+        {
+            SetCurrentDataImage(this._currentDataImageIndex - 1);
+        }
+
+        void Actions_FirstDataImage(object sender, EventArgs e)
+        {
+            SetCurrentDataImage(0);
         }
 
         #endregion

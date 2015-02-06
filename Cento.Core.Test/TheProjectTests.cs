@@ -10,17 +10,18 @@ namespace Cento.Core.Test
         [TestMethod]
         public void ReadValidProjectFile()
         {
-            string filename = @"C:\Users\Alex\Documents\GitHub\Cento\Cento.Core.Test\testfiles\centoProjValid.xml";
+            string filename = @"C:\Users\Alex\Documents\GitHub\Cento\Cento.Core.Test\testfiles\centoProjValid.cproj";
 
-            CentoCore.Instance.OpenProject(filename);
+            var project = CentoCoreHelpers.LoadProject(filename);
+
+            Assert.IsNotNull(project);
         }
 
         [TestMethod]
         public void ReadInvalidProjectFile()
         {
             string filename = @"C:\Users\Alex\Documents\GitHub\Cento\Cento.Core.Test\testfiles\centoProjInvalid.xml";
-
-            CentoCore.Instance.OpenProject(filename);
+            Assert.IsNotNull(null);
         }
     }
 }
