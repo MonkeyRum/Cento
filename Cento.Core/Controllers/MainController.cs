@@ -37,6 +37,7 @@ namespace Cento.Core.Controllers
             this.View.Actions.NextDataImage += Actions_NextDataImage;
             this.View.Actions.LastDataImage += Actions_LastDataImage;
             this.View.Actions.SelectDataImageIndexChanged += Actions_SelectDataImageIndexChanged;
+            this.View.Actions.ToggleDisplayGrid += Actions_ToggleDisplayGrid;
         }
 
         #endregion
@@ -179,6 +180,11 @@ namespace Cento.Core.Controllers
         void Actions_SelectDataImageIndexChanged(object sender, SelectDataImageIndexChangedEventArgs e)
         {
             SetCurrentDataImage(e.Index);
+        }
+
+        void Actions_ToggleDisplayGrid(object sender, EventArgs e)
+        {
+            this.View.DisplayGrid = !this.View.DisplayGrid;
         }
 
         #endregion

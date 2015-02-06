@@ -227,6 +227,31 @@ namespace Cento.View
             actions.OnSelectDataImageIndexChanged(this.cmbImageFiles.SelectedIndex);
         }
 
+        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var actions = this.GetActions();
+            actions.OnToggleDisplayGrid();
+        }
+
         #endregion
+
+
+        public bool DisplayGrid
+        {
+            get
+            {
+                return this.gridToolStripMenuItem.Checked;
+            }
+            set
+            {
+                if(value != this.gridToolStripMenuItem.Checked)
+                {
+                    this.gridToolStripMenuItem.Checked = value;
+                    this.centoGridImageBox1.DisplayGrid = value;
+                }
+            }
+        }
+
+        
     }
 }

@@ -123,15 +123,18 @@
             this.gridToolStripMenuItem.Checked = true;
             this.gridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.gridToolStripMenuItem.Text = "&Grid";
+            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
             // classificationToolStripMenuItem
             // 
             this.classificationToolStripMenuItem.Checked = true;
+            this.classificationToolStripMenuItem.CheckOnClick = true;
             this.classificationToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.classificationToolStripMenuItem.Enabled = false;
             this.classificationToolStripMenuItem.Name = "classificationToolStripMenuItem";
-            this.classificationToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.classificationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.classificationToolStripMenuItem.Text = "&Classification";
             // 
             // projectToolStripMenuItem
