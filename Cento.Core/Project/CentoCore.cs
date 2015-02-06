@@ -10,16 +10,14 @@ namespace Cento.Core.Project
 {
     public sealed class CentoCore
     {
+        #region Members
+
         private static volatile CentoCore instance;
         private static object syncRoot = new Object();
         private CentoProject _project = new CentoProject();
 
-        public event EventHandler ProjectFilenameChanged;
-
-        private ObservableCollection<CentoProjectDataImage> _dataImages 
-            = new ObservableCollection<CentoProjectDataImage>();
-
-        private CentoCore() { }
+        private List<CentoProjectDataImage> _dataImages
+            = new List<CentoProjectDataImage>();
 
         public static CentoCore Instance
         {
@@ -38,50 +36,21 @@ namespace Cento.Core.Project
             }
         }
 
-        public bool OpenProject(string filename)
-        {
-            bool bIsOpenSuccess = false;
+        #endregion
 
-            if (!String.IsNullOrWhiteSpace(filename))
-            {
-                if (File.Exists(filename))
-                {
-                    // http://stackoverflow.com/questions/751511/validating-an-xml-against-referenced-xsd-in-c-sharp
+        #region Events
 
-                    System.Xml.Serialization.XmlSerializer reader =
-                        new System.Xml.Serialization.XmlSerializer(typeof(CentoProject));
+        public event EventHandler ProjectOpened;
 
-                    System.IO.StreamReader file = new System.IO.StreamReader(filename);
-                    this._project = (CentoProject)reader.Deserialize(file);
+        #endregion
 
-                    this.ProjectFilename = filename;
+        #region Constructors
 
-                    foreach(var dataImage in this._project.DataImage)
-                    {
-                        this.DataImages.Add(dataImage);
-                    }
+        private CentoCore() { }
 
-                    bIsOpenSuccess = true;
-                }
-            }
+        #endregion
 
-            return bIsOpenSuccess;
-        }
-
-        public ObservableCollection<CentoProjectDataImage> DataImages
-        {
-            get
-            {
-                return _dataImages;
-            }
-            private set
-            {
-                if (value != null && !ReferenceEquals(value, this._dataImages))
-                {
-                    this._dataImages = value;
-                }
-            }
-        }
+        #region Properties
 
         public string ProjectFilename
         {
@@ -97,13 +66,61 @@ namespace Cento.Core.Project
             }
         }
 
-        private void OnProjectFilenameChanged()
+        public int DataImageCount
         {
-            var cpy = this.ProjectFilenameChanged;
+            get
+            {
+                return this._dataImages.Count;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void OnProjectOpened()
+        {
+            var cpy = this.ProjectOpened;
             if(cpy != null)
             {
                 cpy(this, EventArgs.Empty);
             }
         }
+
+        public bool OpenProject(string projectFilename)
+        {
+            this._project = CentoCoreHelpers.LoadProject(projectFilename);
+
+            if (this._project != null)
+            {
+                this.ProjectFilename = projectFilename;
+
+                this._dataImages.Clear();
+                foreach(var dataImage in this._project.DataImage)
+                {
+                    this._dataImages.Add(dataImage);
+                }
+
+                OnProjectOpened();
+                return this._project != null;
+            }
+
+            return this._project != null;
+        }
+
+        public IEnumerable<CentoProjectDataImage> DataImages()
+        {
+            foreach (var dataImage in this._dataImages)
+            {
+                yield return dataImage;
+            }
+        }
+
+        public CentoProjectDataImage GetDataImageFromIndex(int index)
+        {
+            return this._dataImages[index];
+        }
+
+        #endregion
     }
 }

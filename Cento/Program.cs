@@ -19,10 +19,7 @@ namespace Cento
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            IMainController controller = new MainController()
-            {
-                View = new MainView()
-            };
+            IMainController controller = new MainController(new MainView());
 
             // Quick cast because I know we're using WinForms
             Application.Run((Form)controller.View);

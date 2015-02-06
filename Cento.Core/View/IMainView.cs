@@ -7,23 +7,24 @@ using System.Threading.Tasks;
 
 namespace Cento.Core.View
 {
-    public class ProjectOpenedEventArgs : EventArgs
-    {
-        public string ProjectFilename
-        {
-            get;
-            set;
-        }
-    }
-
     public interface IMainView : IView
     {
+        IMainViewActions Actions { get; }
+
         string ProjectFilename { get; set; }
 
-        Image CurrentImage { get; set; }
+        CentoProjectDataImage CurrentDataImage { get; set; }
 
-        float ZoomLevel { get; }
+        List<CentoProjectDataImage> DataImageList { get; set; }
 
-        event EventHandler<ProjectOpenedEventArgs> ProjectOpened;
+        bool FirstDataImageEnabled { get; set; }
+
+        bool PreviousDataImageEnabled { get; set; }
+
+        bool NextDataImageEnabled { get; set; }
+
+        bool LastDataImageEnabled { get; set; }
+
+        bool DisplayGrid { get; set; }
     }
 }

@@ -42,6 +42,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.stsZoom = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tlBtnOpenProject = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -53,14 +54,17 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.cmbImageFiles = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.openProjectFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.centoGridImageBox1 = new Cento.Control.CentoGridImageBox();
-            this.stsZoom = new System.Windows.Forms.ToolStripStatusLabel();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -119,15 +123,18 @@
             this.gridToolStripMenuItem.Checked = true;
             this.gridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.gridToolStripMenuItem.Text = "&Grid";
+            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
             // classificationToolStripMenuItem
             // 
             this.classificationToolStripMenuItem.Checked = true;
+            this.classificationToolStripMenuItem.CheckOnClick = true;
             this.classificationToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.classificationToolStripMenuItem.Enabled = false;
             this.classificationToolStripMenuItem.Name = "classificationToolStripMenuItem";
-            this.classificationToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.classificationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.classificationToolStripMenuItem.Text = "&Classification";
             // 
             // projectToolStripMenuItem
@@ -158,7 +165,6 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "&About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -169,6 +175,12 @@
             this.statusStrip1.Size = new System.Drawing.Size(624, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // stsZoom
+            // 
+            this.stsZoom.Name = "stsZoom";
+            this.stsZoom.Size = new System.Drawing.Size(58, 17);
+            this.stsZoom.Text = "Zoom 0%";
             // 
             // toolStrip1
             // 
@@ -209,6 +221,7 @@
             // tlBtnFirst
             // 
             this.tlBtnFirst.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tlBtnFirst.Enabled = false;
             this.tlBtnFirst.Image = ((System.Drawing.Image)(resources.GetObject("tlBtnFirst.Image")));
             this.tlBtnFirst.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tlBtnFirst.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -216,10 +229,12 @@
             this.tlBtnFirst.Size = new System.Drawing.Size(26, 26);
             this.tlBtnFirst.Text = "toolStripButton1";
             this.tlBtnFirst.ToolTipText = "First image";
+            this.tlBtnFirst.Click += new System.EventHandler(this.tlBtnFirst_Click);
             // 
             // tlBtnPrevious
             // 
             this.tlBtnPrevious.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tlBtnPrevious.Enabled = false;
             this.tlBtnPrevious.Image = ((System.Drawing.Image)(resources.GetObject("tlBtnPrevious.Image")));
             this.tlBtnPrevious.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tlBtnPrevious.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -227,10 +242,12 @@
             this.tlBtnPrevious.Size = new System.Drawing.Size(26, 26);
             this.tlBtnPrevious.Text = "toolStripButton2";
             this.tlBtnPrevious.ToolTipText = "Previous image";
+            this.tlBtnPrevious.Click += new System.EventHandler(this.tlBtnPrevious_Click);
             // 
             // tlBtnNext
             // 
             this.tlBtnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tlBtnNext.Enabled = false;
             this.tlBtnNext.Image = ((System.Drawing.Image)(resources.GetObject("tlBtnNext.Image")));
             this.tlBtnNext.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tlBtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -238,10 +255,12 @@
             this.tlBtnNext.Size = new System.Drawing.Size(26, 26);
             this.tlBtnNext.Text = "toolStripButton3";
             this.tlBtnNext.ToolTipText = "Next image";
+            this.tlBtnNext.Click += new System.EventHandler(this.tlBtnNext_Click);
             // 
             // tlBtnLast
             // 
             this.tlBtnLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tlBtnLast.Enabled = false;
             this.tlBtnLast.Image = ((System.Drawing.Image)(resources.GetObject("tlBtnLast.Image")));
             this.tlBtnLast.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tlBtnLast.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -249,6 +268,7 @@
             this.tlBtnLast.Size = new System.Drawing.Size(26, 26);
             this.tlBtnLast.Text = "toolStripButton4";
             this.tlBtnLast.ToolTipText = "Last image";
+            this.tlBtnLast.Click += new System.EventHandler(this.tlBtnLast_Click);
             // 
             // tlBtnExit
             // 
@@ -270,58 +290,62 @@
             // 
             this.cmbImageFiles.Name = "cmbImageFiles";
             this.cmbImageFiles.Size = new System.Drawing.Size(121, 29);
+            this.cmbImageFiles.SelectedIndexChanged += new System.EventHandler(this.cmbImageFiles_SelectedIndexChanged);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 29);
             // 
-            // tableLayoutPanel1
+            // openProjectFileDialog
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel1.Controls.Add(this.centoGridImageBox1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.propertyGrid1, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 53);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(624, 366);
-            this.tableLayoutPanel1.TabIndex = 4;
+            this.openProjectFileDialog.DefaultExt = "cproj";
+            this.openProjectFileDialog.FileName = "openFileDialog1";
+            this.openProjectFileDialog.Filter = "Cento Project Files|*.cproj";
             // 
-            // propertyGrid1
+            // splitContainer1
             // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(427, 3);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(194, 360);
-            this.propertyGrid1.TabIndex = 1;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 53);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.centoGridImageBox1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.propertyGrid1);
+            this.splitContainer1.Size = new System.Drawing.Size(624, 366);
+            this.splitContainer1.SplitterDistance = 420;
+            this.splitContainer1.TabIndex = 4;
             // 
             // centoGridImageBox1
             // 
+            this.centoGridImageBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.centoGridImageBox1.DisplayGrid = true;
             this.centoGridImageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.centoGridImageBox1.GridSpacing = 128;
             this.centoGridImageBox1.ImageScale = 1F;
-            this.centoGridImageBox1.Location = new System.Drawing.Point(3, 3);
+            this.centoGridImageBox1.Location = new System.Drawing.Point(0, 0);
             this.centoGridImageBox1.Name = "centoGridImageBox1";
-            this.centoGridImageBox1.Size = new System.Drawing.Size(418, 360);
-            this.centoGridImageBox1.TabIndex = 0;
+            this.centoGridImageBox1.Size = new System.Drawing.Size(420, 366);
+            this.centoGridImageBox1.TabIndex = 1;
             // 
-            // stsZoom
+            // propertyGrid1
             // 
-            this.stsZoom.Name = "stsZoom";
-            this.stsZoom.Size = new System.Drawing.Size(58, 17);
-            this.stsZoom.Text = "Zoom 0%";
+            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.Size = new System.Drawing.Size(200, 366);
+            this.propertyGrid1.TabIndex = 2;
             // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 441);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -334,7 +358,10 @@
             this.statusStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -353,9 +380,6 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addImageToolStripMenuItem;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private Control.CentoGridImageBox centoGridImageBox1;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.ToolStripButton tlBtnFirst;
         private System.Windows.Forms.ToolStripButton tlBtnPrevious;
         private System.Windows.Forms.ToolStripButton tlBtnNext;
@@ -364,12 +388,16 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton tlBtnExit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripComboBox cmbImageFiles;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem classificationToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel stsZoom;
+        private System.Windows.Forms.OpenFileDialog openProjectFileDialog;
+        private System.Windows.Forms.ToolStripComboBox cmbImageFiles;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private Control.CentoGridImageBox centoGridImageBox1;
+        private System.Windows.Forms.PropertyGrid propertyGrid1;
     }
 }
 

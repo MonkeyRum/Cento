@@ -1,5 +1,6 @@
 ﻿using Cento.Core.Project;
 using Cento.Core.View;
+using Cento.View.Actions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,25 +14,16 @@ using System.Windows.Forms;
 
 namespace Cento.View
 {
-    public partial class MainView : Form, IMainView
+    public partial class MainView : ViewBase, IMainView
     {
         #region Members
 
-        private string _filename = String.Empty;
+        private const string _TITLE = "Cento";
+        private string _projectFilename = String.Empty;
+        private CentoProjectDataImage _currentDataImage = null;
+        private List<CentoProjectDataImage> _dataImageIdList = null;
 
-        private OpenFileDialog _openProjectFileDialog = new OpenFileDialog
-        {
-            DefaultExt = "cproj",
-            Filter = "Cento project files (*.cproj)|*.cproj"
-        };
-
-        private float _zoomLevel;
-
-        #endregion
-
-        #region Events
-
-        public event EventHandler<ProjectOpenedEventArgs> ProjectOpened;
+        private IMainViewActions _actions = null;
 
         #endregion
 
@@ -41,36 +33,23 @@ namespace Cento.View
         {
             InitializeComponent();
 
-            this.centoGridImageBox1.ScaleChanged += centoGridImageBox1_ScaleChanged;
+            this.Actions = new MainViewActions();
+            this.cmbImageFiles.ComboBox.DisplayMember = "Id";
         }
 
         #endregion
 
         #region Properties
 
-        public Image CurrentImage
+        public IMainViewActions Actions
         {
             get
             {
-                return centoGridImageBox1.Image;
-            }
-            set
-            {
-                centoGridImageBox1.Image = value;
-            }
-        }
-
-        public float ZoomLevel
-        {
-            get
-            {
-                return _zoomLevel;
+                return this._actions;
             }
             private set
             {
-                this._zoomLevel = value;
-
-                this.stsZoom.Text = "Zoom " + value.ToString("0.##%");
+                this._actions = value;
             }
         }
 
@@ -78,12 +57,104 @@ namespace Cento.View
         {
             get
             {
-                return this._filename;
+                return this._projectFilename;
             }
             set
             {
-                this._filename = value;
-                this.Text = "Cento - " + Path.GetFileName(value);
+                if(String.IsNullOrWhiteSpace(value))
+                {
+                    this.Text = value;
+                }
+                else
+                {
+                    this.Text = _TITLE + " - " + Path.GetFileName(value);
+                }
+            }
+        }
+
+        public CentoProjectDataImage CurrentDataImage
+        {
+            get
+            {
+                return this._currentDataImage;
+            }
+            set
+            {
+                if (!ReferenceEquals(this._currentDataImage, value))
+                {
+                    this._currentDataImage = value;
+                    this.centoGridImageBox1.Image = value.Image;
+                    this.cmbImageFiles.ComboBox.SelectedItem = value;
+                    this.propertyGrid1.SelectedObject = value;
+                }
+            }
+        }
+
+        public List<CentoProjectDataImage> DataImageList
+        {
+            get
+            {
+                return this._dataImageIdList;
+            }
+            set
+            {
+                this._dataImageIdList = value;
+
+                if(value != null)
+                {
+                    foreach(var dataImage in value)
+                    {
+                        this.cmbImageFiles.Items.Add(dataImage);
+                    }
+                }
+            }
+        }
+
+        public bool FirstDataImageEnabled
+        {
+            get
+            {
+                return this.tlBtnFirst.Enabled;
+            }
+            set
+            {
+                this.tlBtnFirst.Enabled = value;
+            }
+        }
+
+        public bool PreviousDataImageEnabled
+        {
+            get
+            {
+                return this.tlBtnPrevious.Enabled;
+            }
+            set
+            {
+                this.tlBtnPrevious.Enabled = value;
+            }
+        }
+
+        public bool NextDataImageEnabled
+        {
+            get
+            {
+                return this.tlBtnNext.Enabled;
+            }
+            set
+            {
+                this.tlBtnNext.Enabled = value;
+            }
+        }
+
+        public bool LastDataImageEnabled
+        {
+            get
+            {
+                return this.tlBtnLast.Enabled;
+            }
+            set
+            {
+                this.tlBtnLast.Enabled = value;
             }
         }
 
@@ -91,52 +162,96 @@ namespace Cento.View
 
         #region Methods
 
-        public void DisplayErrorMessage(string caption, string description)
+        private MainViewActions GetActions()
         {
-            MessageBox.Show(description, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            var actions = this.Actions as MainViewActions;
+
+            if(actions != null)
+            {
+                return actions;
+            }
+
+            throw new InvalidOperationException("Failed to retrieve actions for MainView");
+        }
+
+        private void OpenProjectFileAction()
+        {
+            if (this.openProjectFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var actions = this.GetActions();
+                actions.OnOpenProject(this.openProjectFileDialog.FileName);
+            }
         }
 
         #endregion
 
-        #region Event Handlers
-
-        void centoGridImageBox1_ScaleChanged(object sender, EventArgs e)
-        {
-            this.ZoomLevel = this.centoGridImageBox1.ImageScale;
-        }
+        #region EventHandlers
 
         private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_openProjectFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                this.OnProjectOpened(new ProjectOpenedEventArgs { ProjectFilename = _openProjectFileDialog.FileName });
-            }
+            OpenProjectFileAction();
         }
 
         private void tlBtnOpenProject_Click(object sender, EventArgs e)
         {
-            openProjectToolStripMenuItem_Click(sender, e);
+            OpenProjectFileAction();
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tlBtnFirst_Click(object sender, EventArgs e)
         {
-            AboutBox1 abt = new AboutBox1();
-            abt.ShowDialog();
+            var actions = this.GetActions();
+            actions.OnFirstDataImage();
+        }
+
+        private void tlBtnPrevious_Click(object sender, EventArgs e)
+        {
+            var actions = this.GetActions();
+            actions.OnPreviousDataImage();
+        }
+
+        private void tlBtnNext_Click(object sender, EventArgs e)
+        {
+            var actions = this.GetActions();
+            actions.OnNextDataImage();
+        }
+
+        private void tlBtnLast_Click(object sender, EventArgs e)
+        {
+            var actions = this.GetActions();
+            actions.OnLastDataImage();
+        }
+
+        private void cmbImageFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var actions = this.GetActions();
+            actions.OnSelectDataImageIndexChanged(this.cmbImageFiles.SelectedIndex);
+        }
+
+        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var actions = this.GetActions();
+            actions.OnToggleDisplayGrid();
         }
 
         #endregion
 
-        #region Virtual Methods
 
-        protected virtual void OnProjectOpened(ProjectOpenedEventArgs e)
+        public bool DisplayGrid
         {
-            EventHandler<ProjectOpenedEventArgs> handler = ProjectOpened;
-            if (handler != null)
+            get
             {
-                handler(this, e);
+                return this.gridToolStripMenuItem.Checked;
+            }
+            set
+            {
+                if(value != this.gridToolStripMenuItem.Checked)
+                {
+                    this.gridToolStripMenuItem.Checked = value;
+                    this.centoGridImageBox1.DisplayGrid = value;
+                }
             }
         }
 
-        #endregion
+        
     }
 }
