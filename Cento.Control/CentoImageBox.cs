@@ -11,8 +11,7 @@ using System.Windows.Forms;
 namespace Cento.Control
 {
     /// <summary>
-    /// Control for displaying an image with a grid overlay.
-    /// Can return grid index on mouse click.
+    /// Control for displaying an image.
     /// </summary>
     public partial class CentoImageBox : UserControl
     {
@@ -23,6 +22,13 @@ namespace Cento.Control
         private Image _image = null;
         private float _imageScale = 1.0f;
         private bool _scaleToFit = false;
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler ImageChanged;
+        public event EventHandler ScaleChanged;
 
         #endregion
 
@@ -49,6 +55,9 @@ namespace Cento.Control
 
         #region Properties
 
+        /// <summary>
+        /// Image to display.
+        /// </summary>
         [DefaultValue(typeof(Image), null)]
         public Image Image
         {
@@ -61,6 +70,7 @@ namespace Cento.Control
                 if (!ReferenceEquals(value, this._image))
                 {
                     this._image = value;
+                    this.OnImageChanged();
 
                     if (this.ScaleToFit)
                     {
@@ -72,6 +82,10 @@ namespace Cento.Control
             }
         }
 
+        /// <summary>
+        /// Scale of the Image.
+        /// Ignored if <see cref="ScaleToFit"/> is true.
+        /// </summary>
         [DefaultValue(typeof(float), "1.0f")]
         public float ImageScale
         {
@@ -84,10 +98,15 @@ namespace Cento.Control
                 if (value > 0.0 && !this.ScaleToFit)
                 {
                     this._imageScale = value;
+                    this.OnScaleChanged();
                 }
             }
         }
 
+        /// <summary>
+        /// Scales the Image so that it fits within the bounds of the control.
+        /// Aspect ratio is maintained.
+        /// </summary>
         [DefaultValue(typeof(bool), "true")]
         public bool ScaleToFit
         {
@@ -130,6 +149,34 @@ namespace Cento.Control
                 float sh = (float)ch / ih;
 
                 this._imageScale = sw < sh ? sw : sh;
+            }
+        }
+
+        #endregion
+
+        #region Virtual Methods
+
+        /// <summary>
+        /// Raise ImageChanged.
+        /// </summary>
+        protected virtual void OnImageChanged()
+        {
+            var cpy = ImageChanged;
+            if(cpy != null)
+            {
+                cpy(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Raise ScaleChanged.
+        /// </summary>
+        protected virtual void OnScaleChanged()
+        {
+            var cpy = ScaleChanged;
+            if (cpy != null)
+            {
+                cpy(this, EventArgs.Empty);
             }
         }
 
