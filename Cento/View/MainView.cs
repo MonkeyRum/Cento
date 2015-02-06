@@ -91,16 +91,16 @@ namespace Cento.View
         }
 
 
-        public List<string> Filenames
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        //public List<string> Filenames
+        //{
+        //    get
+        //    {
+        //        return cmbImageFiles.
+        //    }
+        //    set
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
     }
 }

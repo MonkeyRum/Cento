@@ -14,6 +14,8 @@ namespace Cento.Control
         private bool _displayGrid = false;
         private int _gridSpacing = 128;
 
+        private Point? _currentMouseCell = null;
+
         #endregion
 
         #region Properties
@@ -73,6 +75,11 @@ namespace Cento.Control
             }
         }
 
+        private void DrawHighlightCell(Point cell, Graphics g, Brush b)
+        {
+            g.FillRectangle(b, new Rectangle(cell.X * this.GridSpacing, cell.Y * this.GridSpacing, this.GridSpacing, this.GridSpacing));
+        }
+
         #endregion
 
         #region Overrides
@@ -89,6 +96,46 @@ namespace Cento.Control
                     this.DrawGrid(e.Graphics, p);
                 }
             }
+
+            if (this._currentMouseCell != null && this._currentMouseCell.HasValue)
+            {
+                Point cell = this._currentMouseCell.Value;
+
+                using(Brush b = new SolidBrush(Color.FromArgb(128, Color.DarkGray)))
+                {
+                    DrawHighlightCell(cell, e.Graphics, b);
+                }
+            }
+        }
+
+        protected override void OnMouseMove(System.Windows.Forms.MouseEventArgs e)
+        {
+            if (base.Image != null)
+            {
+                int xCell, yCell;
+
+                float displayedWidth = base.Image.Width * base.ImageScale;
+                float displayedHeight = base.Image.Height * base.ImageScale;
+
+                int numCellsX = base.Image.Width / this.GridSpacing;
+                float cellWidth = displayedWidth / numCellsX;
+                xCell = (int)(e.X / cellWidth);
+
+                int numCellsY = base.Image.Height / this.GridSpacing;
+                float cellHeight = displayedHeight / numCellsY;
+                yCell = (int)(e.Y / cellHeight);
+
+                _currentMouseCell = new Point(xCell, yCell);
+                this.Invalidate();
+            }
+
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            this._currentMouseCell = null;
+            base.OnMouseLeave(e);
         }
 
         #endregion
