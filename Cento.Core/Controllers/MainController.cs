@@ -130,7 +130,7 @@ namespace Cento.Core.Controllers
 
         void View_ProjectOpened(object sender, ProjectOpenedEventArgs e)
         {
-            this.OpenProject(e.Filename);
+            this.OpenProject(e.ProjectFilename);
         }
 
         #endregion

@@ -54,9 +54,11 @@
             this.cmbImageFiles = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.centoGridImageBox1 = new Cento.Control.CentoGridImageBox();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.centoGridImageBox1 = new Cento.Control.CentoGridImageBox();
+            this.stsZoom = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -160,6 +162,8 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stsZoom});
             this.statusStrip1.Location = new System.Drawing.Point(0, 419);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(624, 22);
@@ -287,9 +291,17 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(624, 366);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid1.Location = new System.Drawing.Point(427, 3);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.Size = new System.Drawing.Size(194, 360);
+            this.propertyGrid1.TabIndex = 1;
+            // 
             // centoGridImageBox1
             // 
-            this.centoGridImageBox1.DisplayGrid = false;
+            this.centoGridImageBox1.DisplayGrid = true;
             this.centoGridImageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.centoGridImageBox1.GridSpacing = 128;
             this.centoGridImageBox1.ImageScale = 1F;
@@ -298,13 +310,11 @@
             this.centoGridImageBox1.Size = new System.Drawing.Size(418, 360);
             this.centoGridImageBox1.TabIndex = 0;
             // 
-            // propertyGrid1
+            // stsZoom
             // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(427, 3);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(194, 360);
-            this.propertyGrid1.TabIndex = 1;
+            this.stsZoom.Name = "stsZoom";
+            this.stsZoom.Size = new System.Drawing.Size(58, 17);
+            this.stsZoom.Text = "Zoom 0%";
             // 
             // MainView
             // 
@@ -320,6 +330,8 @@
             this.Text = "Cento";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -357,6 +369,7 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem classificationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel stsZoom;
     }
 }
 

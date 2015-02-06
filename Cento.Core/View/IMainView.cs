@@ -9,7 +9,7 @@ namespace Cento.Core.View
 {
     public class ProjectOpenedEventArgs : EventArgs
     {
-        public string Filename
+        public string ProjectFilename
         {
             get;
             set;
@@ -19,7 +19,10 @@ namespace Cento.Core.View
     public interface IMainView : IView
     {
         string ProjectFilename { get; set; }
+
         Image CurrentImage { get; set; }
+
+        float ZoomLevel { get; }
 
         event EventHandler<ProjectOpenedEventArgs> ProjectOpened;
     }

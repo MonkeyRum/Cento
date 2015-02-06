@@ -149,6 +149,13 @@ namespace Cento.Control
                 float sh = (float)ch / ih;
 
                 this._imageScale = sw < sh ? sw : sh;
+
+                if(this._imageScale > 1.0f)
+                {
+                    this._imageScale = 1.0f;
+                }
+
+                this.OnScaleChanged();
             }
         }
 

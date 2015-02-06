@@ -15,45 +15,63 @@ namespace Cento.View
 {
     public partial class MainView : Form, IMainView
     {
+        #region Members
+
         private string _filename = String.Empty;
+
         private OpenFileDialog _openProjectFileDialog = new OpenFileDialog
-            {
-                DefaultExt = "cproj",
-                Filter = "Cento project files (*.cproj)|*.cproj"
-            };
+        {
+            DefaultExt = "cproj",
+            Filter = "Cento project files (*.cproj)|*.cproj"
+        };
+
+        private float _zoomLevel;
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler<ProjectOpenedEventArgs> ProjectOpened;
+
+        #endregion
+
+        #region Constructors
 
         public MainView()
         {
             InitializeComponent();
+
+            this.centoGridImageBox1.ScaleChanged += centoGridImageBox1_ScaleChanged;
         }
 
-        public event EventHandler<ProjectOpenedEventArgs> ProjectOpened;
+        #endregion
 
-        public void DisplayErrorMessage(string caption, string description)
-        {
-            MessageBox.Show(description, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        #region Properties
 
-        protected virtual void OnProjectOpened(ProjectOpenedEventArgs e)
+        public Image CurrentImage
         {
-            EventHandler<ProjectOpenedEventArgs> handler = ProjectOpened;
-            if (handler != null)
+            get
             {
-                handler(this, e);
+                return centoGridImageBox1.Image;
+            }
+            set
+            {
+                centoGridImageBox1.Image = value;
             }
         }
 
-        private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        public float ZoomLevel
         {
-            if(_openProjectFileDialog.ShowDialog() == DialogResult.OK)
+            get
             {
-                this.OnProjectOpened(new ProjectOpenedEventArgs { Filename = _openProjectFileDialog.FileName });
+                return _zoomLevel;
             }
-        }
+            private set
+            {
+                this._zoomLevel = value;
 
-        private void tlBtnOpenProject_Click(object sender, EventArgs e)
-        {
-            openProjectToolStripMenuItem_Click(sender, e);
+                this.stsZoom.Text = "Zoom " + value.ToString("0.##%");
+            }
         }
 
         public string ProjectFilename
@@ -69,19 +87,35 @@ namespace Cento.View
             }
         }
 
+        #endregion
 
+        #region Methods
 
-
-        public Image CurrentImage
+        public void DisplayErrorMessage(string caption, string description)
         {
-            get
+            MessageBox.Show(description, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        void centoGridImageBox1_ScaleChanged(object sender, EventArgs e)
+        {
+            this.ZoomLevel = this.centoGridImageBox1.ImageScale;
+        }
+
+        private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_openProjectFileDialog.ShowDialog() == DialogResult.OK)
             {
-                return centoGridImageBox1.Image;
+                this.OnProjectOpened(new ProjectOpenedEventArgs { ProjectFilename = _openProjectFileDialog.FileName });
             }
-            set
-            {
-                centoGridImageBox1.Image = value;
-            }
+        }
+
+        private void tlBtnOpenProject_Click(object sender, EventArgs e)
+        {
+            openProjectToolStripMenuItem_Click(sender, e);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -90,17 +124,19 @@ namespace Cento.View
             abt.ShowDialog();
         }
 
+        #endregion
 
-        //public List<string> Filenames
-        //{
-        //    get
-        //    {
-        //        return cmbImageFiles.
-        //    }
-        //    set
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //}
+        #region Virtual Methods
+
+        protected virtual void OnProjectOpened(ProjectOpenedEventArgs e)
+        {
+            EventHandler<ProjectOpenedEventArgs> handler = ProjectOpened;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        #endregion
     }
 }
