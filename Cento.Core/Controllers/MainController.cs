@@ -23,7 +23,7 @@ namespace Cento.Core.Controllers
 
         public MainController()
         {
-            TheProject.Instance.ProjectFilenameChanged += Instance_ProjectFilenameChanged;
+            CentoCore.Instance.ProjectFilenameChanged += Instance_ProjectFilenameChanged;
         }
 
         #endregion
@@ -61,7 +61,7 @@ namespace Cento.Core.Controllers
 
             try
             {
-                bSuccess = TheProject.Instance.OpenProject(filename);
+                bSuccess = CentoCore.Instance.OpenProject(filename);
                 InitNewProjectView();
             }
             catch(IOException e)
@@ -79,16 +79,16 @@ namespace Cento.Core.Controllers
 
         private void InitNewProjectView()
         {
-            SetViewProjectFilename(TheProject.Instance.ProjectFilename);
+            SetViewProjectFilename(CentoCore.Instance.ProjectFilename);
             LoadImages();
             SetCurrentImage();
         }
 
         private void LoadImages()
         {
-            foreach(var dataImage in TheProject.Instance.DataImages)
+            foreach(var dataImage in CentoCore.Instance.DataImages)
             {
-                string filename = Path.Combine(TheProject.Instance.ProjectFolderPath, dataImage.Filename);
+                string filename = Path.Combine(CentoCore.Instance.ProjectFolderPath, dataImage.Filename);
                 Image img = Image.FromFile(filename);
                 this._images.Add(img);
             }
@@ -125,7 +125,7 @@ namespace Cento.Core.Controllers
 
         void Instance_ProjectFilenameChanged(object sender, EventArgs e)
         {
-            this.View.ProjectFilename = TheProject.Instance.ProjectFilename;
+            this.View.ProjectFilename = CentoCore.Instance.ProjectFilename;
         }
 
         void View_ProjectOpened(object sender, ProjectOpenedEventArgs e)

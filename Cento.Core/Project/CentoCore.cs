@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Cento.Core.Project
 {
-    public sealed class TheProject
+    public sealed class CentoCore
     {
-        private static volatile TheProject instance;
+        private static volatile CentoCore instance;
         private static object syncRoot = new Object();
         private CentoProject _project = new CentoProject();
 
@@ -19,9 +19,9 @@ namespace Cento.Core.Project
         private ObservableCollection<CentoProjectDataImage> _dataImages 
             = new ObservableCollection<CentoProjectDataImage>();
 
-        private TheProject() { }
+        private CentoCore() { }
 
-        public static TheProject Instance
+        public static CentoCore Instance
         {
             get
             {
@@ -30,7 +30,7 @@ namespace Cento.Core.Project
                     lock (syncRoot)
                     {
                         if (instance == null)
-                            instance = new TheProject();
+                            instance = new CentoCore();
                     }
                 }
 

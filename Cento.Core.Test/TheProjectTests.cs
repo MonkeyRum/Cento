@@ -12,7 +12,7 @@ namespace Cento.Core.Test
         {
             string filename = @"C:\Users\Alex\Documents\GitHub\Cento\Cento.Core.Test\testfiles\centoProjValid.xml";
 
-            TheProject.Instance.OpenProject(filename);
+            CentoCore.Instance.OpenProject(filename);
         }
 
         [TestMethod]
@@ -20,7 +20,7 @@ namespace Cento.Core.Test
         {
             string filename = @"C:\Users\Alex\Documents\GitHub\Cento\Cento.Core.Test\testfiles\centoProjInvalid.xml";
 
-            TheProject.Instance.OpenProject(filename);
+            CentoCore.Instance.OpenProject(filename);
         }
     }
 }
