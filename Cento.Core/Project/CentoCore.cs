@@ -10,16 +10,14 @@ namespace Cento.Core.Project
 {
     public sealed class CentoCore
     {
+        #region Members
+
         private static volatile CentoCore instance;
         private static object syncRoot = new Object();
         private CentoProject _project = new CentoProject();
 
-        public event EventHandler ProjectFilenameChanged;
-
-        private ObservableCollection<CentoProjectDataImage> _dataImages 
+        private ObservableCollection<CentoProjectDataImage> _dataImages
             = new ObservableCollection<CentoProjectDataImage>();
-
-        private CentoCore() { }
 
         public static CentoCore Instance
         {
@@ -37,6 +35,22 @@ namespace Cento.Core.Project
                 return instance;
             }
         }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler ProjectFilenameChanged;
+
+        #endregion
+
+        #region Constructors
+
+        private CentoCore() { }
+
+        #endregion
+
+        #region Properties
 
         public bool OpenProject(string filename)
         {
@@ -97,6 +111,10 @@ namespace Cento.Core.Project
             }
         }
 
+        #endregion
+
+        #region Methods
+
         private void OnProjectFilenameChanged()
         {
             var cpy = this.ProjectFilenameChanged;
@@ -105,5 +123,7 @@ namespace Cento.Core.Project
                 cpy(this, EventArgs.Empty);
             }
         }
+
+        #endregion
     }
 }
