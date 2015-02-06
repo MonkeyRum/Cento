@@ -85,6 +85,7 @@ namespace Cento.View
                     this._currentDataImage = value;
                     this.centoGridImageBox1.Image = value.Image;
                     this.cmbImageFiles.ComboBox.SelectedItem = value;
+                    this.propertyGrid1.SelectedObject = value;
                 }
             }
         }
@@ -218,6 +219,12 @@ namespace Cento.View
         {
             var actions = this.GetActions();
             actions.OnLastDataImage();
+        }
+
+        private void cmbImageFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var actions = this.GetActions();
+            actions.OnSelectDataImageIndexChanged(this.cmbImageFiles.SelectedIndex);
         }
 
         #endregion

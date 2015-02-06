@@ -36,6 +36,7 @@ namespace Cento.Core.Controllers
             this.View.Actions.PreviousDataImage += Actions_PreviousDataImage;
             this.View.Actions.NextDataImage += Actions_NextDataImage;
             this.View.Actions.LastDataImage += Actions_LastDataImage;
+            this.View.Actions.SelectDataImageIndexChanged += Actions_SelectDataImageIndexChanged;
         }
 
         #endregion
@@ -173,6 +174,11 @@ namespace Cento.Core.Controllers
         void Actions_FirstDataImage(object sender, EventArgs e)
         {
             SetCurrentDataImage(0);
+        }
+
+        void Actions_SelectDataImageIndexChanged(object sender, SelectDataImageIndexChangedEventArgs e)
+        {
+            SetCurrentDataImage(e.Index);
         }
 
         #endregion

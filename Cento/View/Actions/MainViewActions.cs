@@ -21,7 +21,7 @@ namespace Cento.View.Actions
 
         public event EventHandler LastDataImage;
 
-        public event EventHandler<SelectDataImageEventArgs> SelectDataImage;
+        public event EventHandler<SelectDataImageIndexChangedEventArgs> SelectDataImageIndexChanged;
 
         public event EventHandler ToggleDisplayGrid;
 
@@ -78,12 +78,12 @@ namespace Cento.View.Actions
             }
         }
 
-        public void OnSelectDataImage(string dataImageId)
+        public void OnSelectDataImageIndexChanged(int index)
         {
-            var cpy = this.SelectDataImage;
+            var cpy = this.SelectDataImageIndexChanged;
             if (cpy != null)
             {
-                this.SelectDataImage(this, new SelectDataImageEventArgs { DataImageId = dataImageId });
+                this.SelectDataImageIndexChanged(this, new SelectDataImageIndexChangedEventArgs { Index = index });
             }
         }
 

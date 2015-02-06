@@ -15,9 +15,9 @@ namespace Cento.Core.View
         }
     }
 
-    public class SelectDataImageEventArgs : EventArgs
+    public class SelectDataImageIndexChangedEventArgs : EventArgs
     {
-        public string DataImageId
+        public int Index
         {
             get;
             set;
@@ -36,7 +36,7 @@ namespace Cento.Core.View
 
         event EventHandler LastDataImage;
 
-        event EventHandler<SelectDataImageEventArgs> SelectDataImage;
+        event EventHandler<SelectDataImageIndexChangedEventArgs> SelectDataImageIndexChanged;
 
         event EventHandler ToggleDisplayGrid;
 
