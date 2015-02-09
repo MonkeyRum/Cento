@@ -26,5 +26,7 @@ namespace Cento.Core.View
         bool LastDataImageEnabled { get; set; }
 
         bool DisplayGrid { get; set; }
+
+        bool DisplayClassification { get; set; }
     }
 }

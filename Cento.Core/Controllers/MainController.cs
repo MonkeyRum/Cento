@@ -38,6 +38,7 @@ namespace Cento.Core.Controllers
             this.View.Actions.LastDataImage += Actions_LastDataImage;
             this.View.Actions.SelectDataImageIndexChanged += Actions_SelectDataImageIndexChanged;
             this.View.Actions.ToggleDisplayGrid += Actions_ToggleDisplayGrid;
+            this.View.Actions.ToggleDisplayClassification += Actions_ToggleDisplayClassification;
         }
 
         #endregion
@@ -185,6 +186,11 @@ namespace Cento.Core.Controllers
         void Actions_ToggleDisplayGrid(object sender, EventArgs e)
         {
             this.View.DisplayGrid = !this.View.DisplayGrid;
+        }
+
+        void Actions_ToggleDisplayClassification(object sender, EventArgs e)
+        {
+            this.View.DisplayClassification = !this.View.DisplayClassification;
         }
 
         #endregion

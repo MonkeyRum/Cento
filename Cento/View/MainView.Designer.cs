@@ -29,6 +29,23 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
+            this.openProjectFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.centoGridImageBox1 = new Cento.Control.CentoGridImageBox();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tlBtnOpenProject = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tlBtnFirst = new System.Windows.Forms.ToolStripButton();
+            this.tlBtnPrevious = new System.Windows.Forms.ToolStripButton();
+            this.tlBtnNext = new System.Windows.Forms.ToolStripButton();
+            this.tlBtnLast = new System.Windows.Forms.ToolStripButton();
+            this.tlBtnExit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmbImageFiles = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.stsZoom = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,146 +58,58 @@
             this.addImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.stsZoom = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tlBtnOpenProject = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tlBtnFirst = new System.Windows.Forms.ToolStripButton();
-            this.tlBtnPrevious = new System.Windows.Forms.ToolStripButton();
-            this.tlBtnNext = new System.Windows.Forms.ToolStripButton();
-            this.tlBtnLast = new System.Windows.Forms.ToolStripButton();
-            this.tlBtnExit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.cmbImageFiles = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.openProjectFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.centoGridImageBox1 = new Cento.Control.CentoGridImageBox();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.menuStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // openProjectFileDialog
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.viewToolStripMenuItem,
-            this.projectToolStripMenuItem,
-            this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(624, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.openProjectFileDialog.DefaultExt = "cproj";
+            this.openProjectFileDialog.FileName = "openFileDialog1";
+            this.openProjectFileDialog.Filter = "Cento Project Files|*.cproj";
             // 
-            // fileToolStripMenuItem
+            // splitContainer1
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openProjectToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "&File";
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 53);
+            this.splitContainer1.Name = "splitContainer1";
             // 
-            // openProjectToolStripMenuItem
+            // splitContainer1.Panel1
             // 
-            this.openProjectToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openProjectToolStripMenuItem.Image")));
-            this.openProjectToolStripMenuItem.Name = "openProjectToolStripMenuItem";
-            this.openProjectToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
-            this.openProjectToolStripMenuItem.Text = "&Open project";
-            this.openProjectToolStripMenuItem.Click += new System.EventHandler(this.openProjectToolStripMenuItem_Click);
+            this.splitContainer1.Panel1.Controls.Add(this.centoGridImageBox1);
             // 
-            // toolStripSeparator1
+            // splitContainer1.Panel2
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(140, 6);
+            this.splitContainer1.Panel2.Controls.Add(this.propertyGrid1);
+            this.splitContainer1.Size = new System.Drawing.Size(624, 366);
+            this.splitContainer1.SplitterDistance = 420;
+            this.splitContainer1.TabIndex = 4;
             // 
-            // exitToolStripMenuItem
+            // centoGridImageBox1
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
+            this.centoGridImageBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.centoGridImageBox1.DisplayClassification = true;
+            this.centoGridImageBox1.DisplayGrid = true;
+            this.centoGridImageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.centoGridImageBox1.GridSpacing = 128;
+            this.centoGridImageBox1.ImageScale = 1F;
+            this.centoGridImageBox1.Location = new System.Drawing.Point(0, 0);
+            this.centoGridImageBox1.Name = "centoGridImageBox1";
+            this.centoGridImageBox1.Size = new System.Drawing.Size(420, 366);
+            this.centoGridImageBox1.TabIndex = 1;
             // 
-            // viewToolStripMenuItem
+            // propertyGrid1
             // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.gridToolStripMenuItem,
-            this.classificationToolStripMenuItem});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.viewToolStripMenuItem.Text = "&View";
-            // 
-            // gridToolStripMenuItem
-            // 
-            this.gridToolStripMenuItem.Checked = true;
-            this.gridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.gridToolStripMenuItem.Text = "&Grid";
-            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
-            // 
-            // classificationToolStripMenuItem
-            // 
-            this.classificationToolStripMenuItem.Checked = true;
-            this.classificationToolStripMenuItem.CheckOnClick = true;
-            this.classificationToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.classificationToolStripMenuItem.Enabled = false;
-            this.classificationToolStripMenuItem.Name = "classificationToolStripMenuItem";
-            this.classificationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.classificationToolStripMenuItem.Text = "&Classification";
-            // 
-            // projectToolStripMenuItem
-            // 
-            this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addImageToolStripMenuItem});
-            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-            this.projectToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.projectToolStripMenuItem.Text = "&Project";
-            // 
-            // addImageToolStripMenuItem
-            // 
-            this.addImageToolStripMenuItem.Enabled = false;
-            this.addImageToolStripMenuItem.Name = "addImageToolStripMenuItem";
-            this.addImageToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.addImageToolStripMenuItem.Text = "&Add Image";
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "&Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.aboutToolStripMenuItem.Text = "&About";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stsZoom});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 419);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(624, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // stsZoom
-            // 
-            this.stsZoom.Name = "stsZoom";
-            this.stsZoom.Size = new System.Drawing.Size(58, 17);
-            this.stsZoom.Text = "Zoom 0%";
+            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.Size = new System.Drawing.Size(200, 366);
+            this.propertyGrid1.TabIndex = 2;
             // 
             // toolStrip1
             // 
@@ -297,48 +226,119 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 29);
             // 
-            // openProjectFileDialog
+            // statusStrip1
             // 
-            this.openProjectFileDialog.DefaultExt = "cproj";
-            this.openProjectFileDialog.FileName = "openFileDialog1";
-            this.openProjectFileDialog.Filter = "Cento Project Files|*.cproj";
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stsZoom});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 419);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(624, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // splitContainer1
+            // stsZoom
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 53);
-            this.splitContainer1.Name = "splitContainer1";
+            this.stsZoom.Name = "stsZoom";
+            this.stsZoom.Size = new System.Drawing.Size(58, 17);
+            this.stsZoom.Text = "Zoom 0%";
             // 
-            // splitContainer1.Panel1
+            // menuStrip1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.centoGridImageBox1);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.viewToolStripMenuItem,
+            this.projectToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(624, 24);
+            this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // splitContainer1.Panel2
+            // fileToolStripMenuItem
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.propertyGrid1);
-            this.splitContainer1.Size = new System.Drawing.Size(624, 366);
-            this.splitContainer1.SplitterDistance = 420;
-            this.splitContainer1.TabIndex = 4;
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openProjectToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
             // 
-            // centoGridImageBox1
+            // openProjectToolStripMenuItem
             // 
-            this.centoGridImageBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.centoGridImageBox1.DisplayGrid = true;
-            this.centoGridImageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.centoGridImageBox1.GridSpacing = 128;
-            this.centoGridImageBox1.ImageScale = 1F;
-            this.centoGridImageBox1.Location = new System.Drawing.Point(0, 0);
-            this.centoGridImageBox1.Name = "centoGridImageBox1";
-            this.centoGridImageBox1.Size = new System.Drawing.Size(420, 366);
-            this.centoGridImageBox1.TabIndex = 1;
+            this.openProjectToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openProjectToolStripMenuItem.Image")));
+            this.openProjectToolStripMenuItem.Name = "openProjectToolStripMenuItem";
+            this.openProjectToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.openProjectToolStripMenuItem.Text = "&Open project";
+            this.openProjectToolStripMenuItem.Click += new System.EventHandler(this.openProjectToolStripMenuItem_Click);
             // 
-            // propertyGrid1
+            // toolStripSeparator1
             // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(200, 366);
-            this.propertyGrid1.TabIndex = 2;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(140, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gridToolStripMenuItem,
+            this.classificationToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "&View";
+            // 
+            // gridToolStripMenuItem
+            // 
+            this.gridToolStripMenuItem.Checked = true;
+            this.gridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gridToolStripMenuItem.Text = "&Grid";
+            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
+            // 
+            // classificationToolStripMenuItem
+            // 
+            this.classificationToolStripMenuItem.Checked = true;
+            this.classificationToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.classificationToolStripMenuItem.Name = "classificationToolStripMenuItem";
+            this.classificationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.classificationToolStripMenuItem.Text = "&Classification";
+            this.classificationToolStripMenuItem.Click += new System.EventHandler(this.classificationToolStripMenuItem_Click);
+            // 
+            // projectToolStripMenuItem
+            // 
+            this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addImageToolStripMenuItem});
+            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.projectToolStripMenuItem.Text = "&Project";
+            // 
+            // addImageToolStripMenuItem
+            // 
+            this.addImageToolStripMenuItem.Enabled = false;
+            this.addImageToolStripMenuItem.Name = "addImageToolStripMenuItem";
+            this.addImageToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.addImageToolStripMenuItem.Text = "&Add Image";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Text = "&About";
             // 
             // MainView
             // 
@@ -352,16 +352,16 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainView";
             this.Text = "Cento";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

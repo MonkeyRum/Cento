@@ -41,6 +41,38 @@ namespace Cento.View
 
         #region Properties
 
+        public bool DisplayGrid
+        {
+            get
+            {
+                return this.gridToolStripMenuItem.Checked;
+            }
+            set
+            {
+                if (value != this.gridToolStripMenuItem.Checked)
+                {
+                    this.gridToolStripMenuItem.Checked = value;
+                    this.centoGridImageBox1.DisplayGrid = value;
+                }
+            }
+        }
+
+        public bool DisplayClassification
+        {
+            get
+            {
+                return this.classificationToolStripMenuItem.Checked;
+            }
+            set
+            {
+                if (value != this.classificationToolStripMenuItem.Checked)
+                {
+                    this.classificationToolStripMenuItem.Checked = value;
+                    this.centoGridImageBox1.DisplayClassification = value;
+                }
+            }
+        }
+
         public IMainViewActions Actions
         {
             get
@@ -233,25 +265,12 @@ namespace Cento.View
             actions.OnToggleDisplayGrid();
         }
 
-        #endregion
-
-
-        public bool DisplayGrid
+        private void classificationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            get
-            {
-                return this.gridToolStripMenuItem.Checked;
-            }
-            set
-            {
-                if(value != this.gridToolStripMenuItem.Checked)
-                {
-                    this.gridToolStripMenuItem.Checked = value;
-                    this.centoGridImageBox1.DisplayGrid = value;
-                }
-            }
+            var actions = this.GetActions();
+            actions.OnToggleDisplayClassification();
         }
 
-        
+        #endregion
     }
 }

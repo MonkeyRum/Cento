@@ -21,10 +21,28 @@ namespace Cento.Control
     /// </summary>
     public class CentoGridImageBox : CentoImageBox
     {
+        #region Nested
+
+        public enum ClassificationType
+        {
+            None = -1,
+            Bad,
+            Good,
+            Anomalous
+        };
+
+        #endregion
+
         #region Members
 
         private bool _displayGrid = false;
         private int _gridSpacing = 128;
+
+        private bool _displayClassification = false;
+        private int[,] _classification = null; // -1 is no classification yet
+
+        private int _numCellsX = -1;
+        private int _numCellsY = -1;
 
         private Point? _currentMouseCell = null;
 
@@ -76,9 +94,61 @@ namespace Cento.Control
             }
         }
 
+        /// <summary>
+        /// Whether or not to display the classification colours over the image.
+        /// </summary>
+
+        public bool DisplayClassification
+        {
+            get
+            {
+                return this._displayClassification;
+            }
+            set
+            {
+                if(value != this._displayClassification)
+                {
+                    this._displayClassification = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
+
+        public void SetClassification(int cellX,int cellY, ClassificationType type)
+        {
+            if(this._classification != null)
+            {
+                _classification[cellX, cellY] = (int)type;
+            }
+        }
+
+        private void DrawClassificationColours(Graphics g)
+        {
+            Brush[] brushes = new Brush[]
+                { 
+                    new SolidBrush(Color.FromArgb(100, 255, 0, 0)), // bad
+                    new SolidBrush(Color.FromArgb(100, 0, 255, 0)), // good
+                    new SolidBrush(Color.FromArgb(100, 0, 0, 255))  // anomalous
+                };
+
+            for (int y = 0; y < this._numCellsY; y++)
+            {
+                for(int x = 0; x < this._numCellsX; x++)
+                {
+                    int classification = this._classification[x, y];
+
+                    if(classification > 0)
+                    {
+                        Brush b = brushes[classification];
+                        g.FillRectangle(b, new Rectangle(x * this.GridSpacing, y * this.GridSpacing, this.GridSpacing, this.GridSpacing));
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Draws the grid overlay on the image.
@@ -91,8 +161,8 @@ namespace Cento.Control
             {
                 g.ScaleTransform(base.ImageScale, base.ImageScale);
 
-                int numCellsX = (int)(base.Image.Width / this.GridSpacing);
-                int numCellsY = (int)(base.Image.Height / this.GridSpacing);
+                int numCellsX = GetNumCellsX();
+                int numCellsY = GetNumCellsY();
 
                 for (int i = 1; i < numCellsX; ++i)
                 {
@@ -153,6 +223,27 @@ namespace Cento.Control
 
             return cell;
         }
+        
+        private int GetNumCellsX()
+        {
+            return (int)(base.Image.Width / this.GridSpacing);
+        }
+
+        private int GetNumCellsY()
+        {
+            return (int)(base.Image.Height / this.GridSpacing);
+        }
+
+        private void ClearClassification()
+        {
+            for (int x = 0; x < _numCellsX; ++x)
+            {
+                for (int y = 0; y < _numCellsY; ++y)
+                {
+                    _classification[x, y] = (int)ClassificationType.None;
+                }
+            }
+        }
 
         #endregion
 
@@ -178,6 +269,11 @@ namespace Cento.Control
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
             base.OnPaint(e);
+
+            if(this.DisplayClassification)
+            {
+                DrawClassificationColours(e.Graphics);
+            }
 
             if (this.DisplayGrid)
             {
@@ -227,6 +323,27 @@ namespace Cento.Control
             }
 
             base.OnMouseClick(e);
+        }
+
+        protected override void OnImageChanged()
+        {
+            if(base.Image != null)
+            {
+                _numCellsX = GetNumCellsX();
+                _numCellsY = GetNumCellsY();
+
+                _classification = new int[_numCellsX, _numCellsY];
+                ClearClassification();
+            }
+            else
+            {
+                _classification = null;
+
+                _numCellsX = -1;
+                _numCellsY = -1;
+            }
+
+            base.OnImageChanged();
         }
 
         #endregion
